@@ -1,0 +1,17 @@
+{
+  "name": "simple-webrtc-app",
+  "version": "1.0.0",
+  "description": "Simple WebRTC app with a basic backend",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
