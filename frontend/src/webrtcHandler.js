@@ -117,6 +117,29 @@ export default class WebRTCHandler {
         }
     }
 
+    // async handleOffer(partnerId, offer) {
+    //     try {
+    //         this.currentPeer = partnerId;
+    //         this.isInitiator = false;
+    //         await this.setupLocalStream();
+    //         this.createPeerConnection();
+    //
+    //         await this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+    //         const answer = await this.peerConnection.createAnswer();
+    //         await this.peerConnection.setLocalDescription(answer);
+    //
+    //         this.socket.emit('signal', {
+    //             to: partnerId,
+    //             signal: {
+    //                 type: 'answer',
+    //                 sdp: answer
+    //             }
+    //         });
+    //     } catch (error) {
+    //         console.error('Error handling offer:', error);
+    //     }
+    // }
+
     async handleOffer(partnerId, offer) {
         try {
             this.currentPeer = partnerId;
@@ -124,7 +147,13 @@ export default class WebRTCHandler {
             await this.setupLocalStream();
             this.createPeerConnection();
 
+            // First set remote description
             await this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+
+            // Add a small delay for stream synchronization
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // Then create and set local description
             const answer = await this.peerConnection.createAnswer();
             await this.peerConnection.setLocalDescription(answer);
 
