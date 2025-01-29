@@ -46,7 +46,12 @@ export default class WebRTCHandler {
 
         // ICE connection monitoring
         this.peerConnection.oniceconnectionstatechange = () => {
-            console.log('ICE Connection State:', this.peerConnection.iceConnectionState);
+            const state = this.peerConnection.iceConnectionState;
+            console.log('ICE Connection State:', state);
+            if (state === 'connected' || state === 'completed') {
+                console.log('Media connection established');
+                this.ui.toggleLoader(false);  // Hide loader when connected
+            }
         };
 
         // ICE candidate handling

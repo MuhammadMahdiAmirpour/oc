@@ -114,9 +114,11 @@ export default class UIManager {
     }
 
     toggleLoader(show) {
-        const loader = document.getElementById('loader');
-        if (loader) {
-            loader.style.display = show ? 'block' : 'none';
+        const loader = document.querySelector('.loader');
+        if (show) {
+            loader.style.display = 'flex';
+        } else {
+            loader.style.display = 'none';
         }
     }
 
