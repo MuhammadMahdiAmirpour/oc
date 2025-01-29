@@ -8,26 +8,30 @@
 </head>
 <body>
 <div class="container">
-    <div class="video-container">
-        <div class="video-box"><video id="localVideo" autoplay playsinline muted></video></div>
-        <div class="video-box"><video id="remoteVideo" autoplay playsinline></video></div>
-    </div>
-
-    <div class="chat-container">
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Type your message...">
-            <button id="sendMessageBtn">Send</button>
+    <div class="left-section">
+        <div class="video-container">
+            <video id="localVideo" autoplay playsinline muted></video>
+            <video id="remoteVideo" autoplay playsinline></video>
         </div>
     </div>
 
-    <div class="controls">
-        <button id="connectBtn" class="glow-on-hover">Connect</button>
-        <button id="disconnectBtn" class="glow-on-hover">Disconnect</button>
+    <div class="right-section">
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendMessageBtn">Send</button>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="connectBtn" class="glow-on-hover">Connect</button>
+            <button id="disconnectBtn" class="glow-on-hover">Disconnect</button>
+        </div>
     </div>
 
     <div class="loader" id="loader"></div>
 </div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script type="module" src="./src/app.js"></script>
 </body>

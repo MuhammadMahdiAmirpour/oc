@@ -11,33 +11,8 @@ class App {
         this.setupEventListeners();
     }
 
-    // initializeSocket() {
-    //     this.socket.on('matched', partnerId => {
-    //         this.webrtc.initiateCall(partnerId);
-    //     });
-    //
-    //     this.socket.on('signal', async ({ from, signal }) => {
-    //         if(signal.type === 'offer') {
-    //             await this.webrtc.handleOffer(from, signal);
-    //         } else if(signal.type === 'answer') {
-    //             await this.webrtc.handleAnswer(signal);
-    //         } else if(signal.candidate) {
-    //             this.webrtc.handleICECandidate(signal);
-    //         }
-    //     });
-    //
-    //     this.socket.on('partnerDisconnected', () => {
-    //         this.ui.showNotification('Partner disconnected. Searching for new connection...');
-    //         this.socket.emit('join');
-    //     });
-    //
-    //     this.socket.on('chatMessage', message => {
-    //         this.ui.addMessage(message, 'received');
-    //     });
-    // }
-
     initializeSocket() {
-        this.socket.on('matched', partnerId => {
+        this.socket.on('matched', (partnerId) => {
             console.log('Matched with partner:', partnerId);
             this.webrtc.initiateCall(partnerId);
         });
@@ -53,7 +28,7 @@ class App {
             this.socket.emit('join');
         });
 
-        this.socket.on('chatMessage', message => {
+        this.socket.on('chatMessage', ({ from, message }) => {
             this.ui.addMessage(message, 'received');
         });
     }
@@ -73,13 +48,24 @@ class App {
         document.getElementById('sendMessageBtn').addEventListener('click', () => {
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
-            if(message) {
-                this.socket.emit('chatMessage', {
-                    roomId: this.webrtc.currentPeer,
-                    message
-                });
-                this.ui.addMessage(message, 'sent');
-                input.value = '';
+            if (message) {
+                // this.socket.emit('chatMessage', {
+                //     to: this.webrtc.currentPeer, // Send to the current peer
+                //     message,
+                // });
+                // this.ui.addMessage(message, 'sent');
+                // input.value = '';
+                if (this.webrtc.sendMessage(message)) {
+                    this.ui.addMessage(message, 'sent');
+                    input.value = '';
+                }
+            }
+        });
+
+        // Handle Enter key for sending messages
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('sendMessageBtn').click();
             }
         });
     }
