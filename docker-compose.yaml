@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   webrtc-app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: webrtc-app
     ports:
       - "3000:3000"
@@ -11,4 +13,28 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=production
+      - PORT=3000 # Explicitly define the port for consistency
     restart: unless-stopped
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo-db
+    restart: unless-stopped
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: examplepassword
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:

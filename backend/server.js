@@ -12,13 +12,10 @@ const __filename = fileURLToPath(import.meta.url); // Get the current file path
 const __dirname = path.dirname(__filename); // Get the directory name
 
 // MongoDB connection URL
-const MONGO_URI = 'mongodb://localhost:27017/webrtc_chat'; // Replace with your MongoDB URI
+const MONGO_URI = 'mongodb://mongo-db:27017/webrtc_chat'; // Replace with your MongoDB URI
 
 // Connect to MongoDB
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(MONGO_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
