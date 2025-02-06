@@ -22,9 +22,6 @@ services:
     image: mongo:6.0
     container_name: mongo-db
     restart: unless-stopped
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: examplepassword
     volumes:
       - mongo-data:/data/db
     ports:
